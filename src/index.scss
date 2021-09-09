@@ -14,10 +14,11 @@ body {
 
   .button_#{$name} {
     background-color: $color;
-    border: 1px solid darken($color, 10%);
+    border: none;
+    transition: .3s background-color ease-in-out;
 
     &:hover {
-      background-color: darken($color, 5%);
+      background-color: darken($color, 6%);
     }
 
   }
@@ -27,14 +28,9 @@ body {
 
 .button_plus {
   display: inline-block;
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(#fff, #fff),
-  linear-gradient(#fff, #fff),
-  #000;
+  background: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff), #000;
   background-position: center;
-  background-size: 50% 2px, 2px 50%; /*thickness = 2px, length = 50% (25px)*/
+  background-size: 50% 2px, 2px 50%;
   background-repeat: no-repeat;
   border-radius: 50%;
-  z-index: 1;
 }
