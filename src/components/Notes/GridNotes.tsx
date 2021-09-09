@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './GridNotes.module.scss';
 import { ReactComponent as Pen } from '../../assets/pen.svg';
-import { NoteType } from '../../App';
+import { changeTextType, NoteType } from '../../App';
 
 interface NoteProps {
   note: NoteType;
+  changeText:changeTextType
+
 }
 
-function Note({ note }: NoteProps): JSX.Element {
+function Note({ note, changeText }: NoteProps): JSX.Element {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -20,7 +22,16 @@ function Note({ note }: NoteProps): JSX.Element {
   return (
     <div className={`${styles.note} note_${note.color}`}>
       {
-        note.new ? <textarea className={styles.textarea} ref={textareaRef} /> : (
+        note.new ? (
+          <textarea
+            rows={4}
+            className={styles.textarea}
+            ref={textareaRef}
+            data-id={note.id}
+            onChange={changeText}
+            value={note.text}
+          />
+        ) : (
           <span className={styles.text}>
             {note.text}
           </span>
@@ -48,13 +59,14 @@ function Note({ note }: NoteProps): JSX.Element {
 
 interface NotesProps {
   notes: Array<NoteType>;
+  changeText:changeTextType
 }
 
-function GridNotes({ notes }: NotesProps): JSX.Element {
+function GridNotes({ notes, changeText }: NotesProps): JSX.Element {
   return (
     <div className={styles.grid}>
       {
-        notes.map((el) => <Note note={el} key={el.id} />)
+        notes.map((el) => <Note note={el} key={el.id} changeText={changeText} />)
       }
     </div>
   );

@@ -3,17 +3,19 @@ import styles from './App.module.scss';
 import Header from './components/Header/Header';
 import GridNotes from './components/Notes/GridNotes';
 
-type Colours='primary' | 'danger' | 'warning' | 'accept' | 'purple'
+type Colours = 'primary' | 'danger' | 'warning' | 'accept' | 'purple'
+
 export interface NoteType {
   id: number,
   color: Colours,
   text: string,
-  date:number,
-  description?:string,
-  new?:boolean
+  date: number,
+  description?: string,
+  new?: boolean
 }
 
 type createNotesType = (arg: Colours) => void
+export type changeTextType=(e:any)=>void
 
 interface ButtonProps {
   createNotes: createNotesType,
@@ -90,12 +92,23 @@ function App(): JSX.Element {
     setNotes(newArr.reverse());
   };
 
+  const changeText:changeTextType = (e) => {
+    setNotes((s) => s.map((note) => {
+      if (note.id === +e.target.dataset.id) {
+        const copyNote = { ...note };
+        copyNote.text = e.target.value;
+        return copyNote;
+      }
+      return note;
+    }));
+  };
+
   return (
     <div className={styles.app}>
       <ButtonCreate createNotes={createNote} />
       <section className={styles.section}>
         <Header />
-        <GridNotes notes={notes} />
+        <GridNotes notes={notes} changeText={changeText} />
       </section>
     </div>
   );
