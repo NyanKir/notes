@@ -3,13 +3,17 @@ import styles from './App.module.scss';
 import Header from './components/Header/Header';
 import GridNotes from './components/Notes/GridNotes';
 
+type Colours='primary' | 'danger' | 'warning' | 'accept' | 'purple'
 export interface NoteType {
-  id:number,
-  color: 'primary' | 'danger' | 'warning' | 'accept' | 'purple',
-  text: string
+  id: number,
+  color: Colours,
+  text: string,
+  date:number,
+  description?:string,
+  new?:boolean
 }
 
-type createNotesType = <T>(arg: T) => void
+type createNotesType = (arg: Colours) => void
 
 interface ButtonProps {
   createNotes: createNotesType,
@@ -26,11 +30,36 @@ function ButtonCreate({ createNotes }: ButtonProps): JSX.Element {
         className="btn button_dark button_plus button_radius"
         onClick={() => setHidden((s) => !s)}
       />
-      <button className={`${styles.bubble} button_primary`} onClick={() => createNotes('primary')} aria-label="Create" type="button" />
-      <button className={`${styles.bubble} button_danger`} onClick={() => createNotes('danger')} aria-label="Create" type="button" />
-      <button className={`${styles.bubble} button_warning`} onClick={() => createNotes('warning')} aria-label="Create" type="button" />
-      <button className={`${styles.bubble} button_purple`} onClick={() => createNotes('purple')} aria-label="Create" type="button" />
-      <button className={`${styles.bubble} button_accept`} onClick={() => createNotes('accept')} aria-label="Create" type="button" />
+      <button
+        className={`${styles.bubble} button_primary`}
+        onClick={() => createNotes('primary')}
+        aria-label="Create"
+        type="button"
+      />
+      <button
+        className={`${styles.bubble} button_danger`}
+        onClick={() => createNotes('danger')}
+        aria-label="Create"
+        type="button"
+      />
+      <button
+        className={`${styles.bubble} button_warning`}
+        onClick={() => createNotes('warning')}
+        aria-label="Create"
+        type="button"
+      />
+      <button
+        className={`${styles.bubble} button_purple`}
+        onClick={() => createNotes('purple')}
+        aria-label="Create"
+        type="button"
+      />
+      <button
+        className={`${styles.bubble} button_accept`}
+        onClick={() => createNotes('accept')}
+        aria-label="Create"
+        type="button"
+      />
     </div>
   );
 }
@@ -40,10 +69,25 @@ function App(): JSX.Element {
     id: 1,
     color: 'primary',
     text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, consectetur!',
+    date: Date.now() - (100 * 1000000),
+  }, {
+    id: 2,
+    color: 'purple',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, consectetur!',
+    date: Date.now(),
   }]);
 
-  const createNote:createNotesType = (color) => {
-    console.log(color);
+  const createNote: createNotesType = (color) => {
+    const newNote: NoteType = {
+      id: notes[notes.length - 1].id + 1,
+      color,
+      text: 'New Note!',
+      date: Date.now(),
+      new: true,
+    };
+    const newArr = [...notes].reverse();
+    newArr.unshift(newNote);
+    setNotes(newArr.reverse());
   };
 
   return (

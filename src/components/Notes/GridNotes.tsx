@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './GridNotes.module.scss';
 import { ReactComponent as Pen } from '../../assets/pen.svg';
 import { NoteType } from '../../App';
@@ -8,21 +8,40 @@ interface NoteProps {
 }
 
 function Note({ note }: NoteProps): JSX.Element {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (note.new) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      textareaRef.current.focus();
+    }
+  }, []);
   return (
     <div className={`${styles.note} note_${note.color}`}>
-      <span className={styles.text}>
-        {note.text}
-      </span>
-      <div className={styles.footer}>
-        <span className={styles.date}>May 12, 2001</span>
-        <button
-          type="button"
-          className="btn button_dark button_radius button_center"
-          aria-label="Change"
-        >
-          <Pen className={styles.svg} />
-        </button>
-      </div>
+      {
+        note.new ? <textarea className={styles.textarea} ref={textareaRef} /> : (
+          <span className={styles.text}>
+            {note.text}
+          </span>
+        )
+      }
+
+      {
+        !note.new ? (
+          <div className={styles.footer}>
+            <span className={styles.date}>{new Date(note.date).toDateString()}</span>
+            <button
+              type="button"
+              className="btn button_dark button_radius button_center"
+              aria-label="Change"
+            >
+              <Pen className={styles.svg} />
+            </button>
+          </div>
+        )
+          : ''
+      }
     </div>
   );
 }
