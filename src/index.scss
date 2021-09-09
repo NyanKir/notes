@@ -10,7 +10,7 @@ body {
 }
 
 
-@each $name, $color in $button {
+@each $name, $color in $colours {
 
   .button_#{$name} {
     background-color: $color;
@@ -18,8 +18,13 @@ body {
     transition: .3s background-color ease-in-out;
 
     &:hover {
-      background-color: darken($color, 6%);
+      background-color: lighten($color, 25%);
     }
+
+  }
+
+  .note_#{$name} {
+    background-color: $color;
 
   }
 
@@ -32,5 +37,13 @@ body {
   background-position: center;
   background-size: 50% 2px, 2px 50%;
   background-repeat: no-repeat;
+}
+
+.button_radius{
   border-radius: 50%;
+}
+.button_center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,0 +1,41 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));;
+  grid-gap: 1rem;
+}
+
+.note {
+  height: 300px;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  color: #1f1f1f;
+  display: -webkit-box;
+  font-size: 1.35rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+}
+
+.footer{
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+}
+.date{
+  font-size: 1.2rem;
+  color: #1f1f1f;
+}
+
+.svg{
+  width: 60%;
+  height: auto;
+  fill: white;
+}
